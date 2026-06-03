@@ -23,8 +23,8 @@ a process that is slow, biased, and inconsistent. Two costly errors happen every
 **Solution:** Build an ML system that minimises both errors using
 **Precision**, **Recall**, and **F1 Score** — not Accuracy.
 
-> Why not Accuracy? The dataset has 65% rejected vs 35% approved.
-> A model rejecting everyone scores 65% accuracy — and is completely useless.
+> Why not Accuracy? The dataset has 70% rejected vs 30% approved.
+> A model rejecting everyone scores 70% accuracy — and is completely useless.
 
 ---
 
@@ -36,7 +36,7 @@ a process that is slow, biased, and inconsistent. Two costly errors happen every
 | Raw features | 19 (income, credit score, DTI ratio, employment, etc.) |
 | Engineered features | 9 new features added |
 | Target column | `Loan_Approved` — Yes (1) or No (0) |
-| Class split | 65% Rejected · 35% Approved |
+| Class split | 70% Rejected · 30% Approved |
 
 ---
 
@@ -66,35 +66,35 @@ a process that is slow, biased, and inconsistent. Two costly errors happen every
 
 | Model | Precision | Recall | F1 Score | Accuracy |
 |---|---|---|---|---|
-| Naive Bayes | 0.780 | 0.820 | 0.800 | 87.0% |
-| Logistic Regression | 0.750 | 0.790 | 0.769 | 85.5% |
-| KNN | 0.700 | 0.720 | 0.710 | 82.5% |
+| Naive Bayes | 0.805 | 0.737 | 0.769 | 86.5% |
+| Logistic Regression | 0.783| 0.770 | 0.777 | 86.5% |
+| KNN | 0.627 | 0.525 | 0.571 | 76.0% |
 
 ### After Feature Engineering
 
 | Model | Precision | Recall | F1 Score | Accuracy |
 |---|---|---|---|---|
-| **Naive Bayes** | **0.705** | **0.917** | **0.797** ✅ | **86.0%** |
-| Logistic Regression | 0.684 | 0.900 | 0.777 | 84.5% |
-| KNN | 0.680 | 0.850 | 0.756 | 83.5% |
+| **Naive Bayes** | **0.809** | **0.902** | **0.853** ✅ | **90.5%** |
+| Logistic Regression | 0.794 | 0.820 | 0.806 | 88.0% |
+| KNN | 0.681 | 0.770 | 0.723 | 82.0% |
 
 ### 🏆 Final Model — Naive Bayes
 
 ```
-Precision  :  0.705   (70.5% of approved predictions are correct)
-Recall     :  0.917   (catches 55 of 60 qualified applicants)
-F1 Score   :  0.797
-Accuracy   :  86.0%
+Precision  :  0.809   (80.9% of approved predictions are correct)
+Recall     :  0.902   (catches 55 of 61 qualified applicants)
+F1 Score   :  0.853
+Accuracy   :  90.5%
 
 Confusion Matrix:
               Predicted Rejected    Predicted Approved
-Actual Rejected      117 (TN)            23 (FP)
-Actual Approved        5 (FN)            55 (TP)
+Actual Rejected      126 (TN)            13 (FP)
+Actual Approved        6 (FN)            55 (TP)
 ```
 
-**117** risky applicants correctly rejected → defaults avoided  
+**126** risky applicants correctly rejected → defaults avoided  
 **55** good applicants correctly approved → revenue captured  
-Only **5** good applicants wrongly rejected → minimal customer loss
+Only **6** good applicants wrongly rejected → minimal customer loss
 
 ---
 
@@ -102,10 +102,10 @@ Only **5** good applicants wrongly rejected → minimal customer loss
 
 | # | Finding |
 |---|---|
-| 1 | Credit Score is the strongest predictor — approved avg **726.9** vs rejected **651.6** |
-| 2 | DTI Ratio is the strongest risk signal — approved avg **0.25** vs rejected **0.39** |
+| 1 | Credit Score is the strongest predictor — approved avg **724.2** vs rejected **655.6** |
+| 2 | DTI Ratio is the strongest risk signal — approved avg **0.251** vs rejected **0.39** |
 | 3 | Loan Amount alone is weak — the *ratio* to income is what matters |
-| 4 | 65% class imbalance — Accuracy is misleading, F1 Score is the right metric |
+| 4 | 70% class imbalance — Accuracy is misleading, F1 Score is the right metric |
 | 5 | Savings and Collateral are weak individually — their ratio to loan amount is powerful |
 
 ---
@@ -122,7 +122,7 @@ check these manually. Domain knowledge creates better features than random math.
 
 **3. Naive Bayes has a structural advantage here**
 With many binary OHE columns, Naive Bayes handles independence well.
-After engineering, its Recall of 91.7% minimises missed good customers.
+After engineering, its Recall of 90.2% minimises missed good customers.
 
 **4. KNN suffers from the Curse of Dimensionality**
 One-hot encoding created many sparse binary columns.
